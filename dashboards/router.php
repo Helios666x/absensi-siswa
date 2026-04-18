@@ -1,18 +1,24 @@
 <?php
 require_once __DIR__ . '/../config/app.php';
-require_once __DIR__ . '/../config/constants.php';
+require_once __DIR__ . '/../config/constants.php'; // <- TAMBAHKAN BARIS INI
+require_once __DIR__ . '/../includes/auth-check.php';
+require_once __DIR__ . '/../includes/helper.php';
 
-// Kalau role tidak ada, hentikan paksa. Jangan berputar.
 if (!isset($_SESSION['role'])) {
-    header("Location: " . BASE_URL . "login.php");
+    header("Location: " . BASE_URL . "index.php");
     exit;
 }
 
-if ($_SESSION['role'] === 'admin') {
-    header("Location: " . BASE_URL . "dashboards/admin.php");
-    exit;
-} else {
-    // Sementara, role lain juga dilempar ke admin (karena cuma punya akun admin sekarang)
-    header("Location: " . BASE_URL . "login.php");
-    exit;
+switch ($_SESSION['role']) {
+    case ROLE_ADMIN:
+        redirect(BASE_URL . 'dashboards/admin.php');
+        break;
+    case ROLE_GURU:
+        redirect(BASE_URL . 'dashboards/guru.php');
+        break;
+    case ROLE_SISWA:
+        redirect(BASE_URL . 'dashboards/siswa.php');
+        break;
+    default:
+        redirect(BASE_URL . 'index.php');
 }

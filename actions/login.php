@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/constants.php';
 require_once __DIR__ . '/../includes/helper.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         set_flashdata('error', 'Username tidak ditemukan atau akun dinonaktifkan.');
     }
-    redirect(BASE_URL . 'login.php');
+    redirect(BASE_URL . 'index.php');
 } else {
-    redirect(BASE_URL . 'login.php');
+    redirect(BASE_URL . 'index.php');
 }
